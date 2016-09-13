@@ -37,7 +37,6 @@ router.post('/register', function (req, res, next) {
 // redirect to /dashboard,
 // and req.isAuthenticated() will return true
 router.post('/login', passport.authenticate('local', {
-
     successRedirect: '/dashboard',
     failureRedirect: '/fail'
   })

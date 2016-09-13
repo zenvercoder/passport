@@ -27,7 +27,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// TODO: configure express session
 // Configure express session
  app.use(session({
    secret: 'keyboard cat',
