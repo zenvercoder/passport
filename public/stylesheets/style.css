@@ -15,9 +15,11 @@ body {
   margin: 0 auto;
 }
 
-.cards .mdl-card {
+.cards .mdl-card,
+.full-width {
   width: 100%;
 }
+
 
 
 

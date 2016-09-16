@@ -9,37 +9,44 @@ var userModule = require('./users')
 //   res.render('index', { title: 'Express' });
 // });
 
-router.get('/', function(req, res, next) {
-  // Don't show login and register to logged in users
-  if (req.isAuthenticated())
-  {
-    res.redirect('/dashboard');
-    return;
-  }
-  res.render('index', { title: 'Blog' });
+router.get('/', function (req, res, next) {
+    // Don't show login and register to logged in users
+    if (req.isAuthenticated()) {
+        res.redirect('/dashboard');
+        return;
+    }
+    res.render('index', {title: 'Blog'});
 });
 
-router.get('/login_register', function(req, res, next) {
-  // Don't show login and register to logged in users
-  if (req.isAuthenticated())
-  {
-    res.redirect('/dashboard');
-    return;
-  }
-  res.render('login_register');
+router.get('/login_register', function (req, res, next) {
+    // Don't show login and register to logged in users
+    if (req.isAuthenticated()) {
+        res.redirect('/dashboard');
+        return;
+    }
+    res.render('login_register');
+});
+
+router.get('/new_post', function (req, res, next) {
+    // Don't show login and register to logged in users
+    if (req.isAuthenticated()) {
+        res.redirect('/new_post');
+        return;
+    }
+    res.render('new_post');
 });
 
 router.post('/register', function (req, res, next) {
-  // Add the user to our data store
-  userModule.add(req.body.username, req.body.password)
-      .then(function(){
-        console.log('user registered');
-        res.redirect('/');
-      })
-      .catch(function(err){
-        next(new Error('User could not be created.'));
-        return;
-      });
+    // Add the user to our data store
+    userModule.add(req.body.username, req.body.password)
+        .then(function () {
+            console.log('user registered');
+            res.redirect('/');
+        })
+        .catch(function (err) {
+            next(new Error('User could not be created.'));
+            return;
+        });
 });
 
 // This route will authenticate a user and create a session.
@@ -47,25 +54,25 @@ router.post('/register', function (req, res, next) {
 // redirect to /dashboard,
 // and req.isAuthenticated() will return true
 router.post('/login', passport.authenticate('local', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/fail'
-  })
+        successRedirect: '/dashboard',
+        failureRedirect: '/fail'
+    })
 );
 
 router.get('/logout', function (req, res) {
-  // Clear the session and unauthenticate the user
-  req.logout();
-  res.redirect('/');
+    // Clear the session and unauthenticate the user
+    req.logout();
+    res.redirect('/');
 });
 
 router.get('/dashboard', function (req, res, next) {
-  // Determine if the user is authenticate to view the page
-  if (!req.isAuthenticated()) {
-    res.redirect('/');
-    return;
-  }
-  // req.user will be the value from deserializeUser
-  res.render('dashboard', { user: req.user })
+    // Determine if the user is authenticate to view the page
+    if (!req.isAuthenticated()) {
+        res.redirect('/');
+        return;
+    }
+    // req.user will be the value from deserializeUser
+    res.render('dashboard', {user: req.user})
 });
 
 module.exports = router;
