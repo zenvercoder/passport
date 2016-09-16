@@ -1,5 +1,5 @@
 var environment = 'development';
 
-var config = require('../database/knexfile')[environment];
+var config = require('../knexfile')[environment];
 
 module.exports = require('knex')(config);

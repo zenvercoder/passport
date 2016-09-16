@@ -21,15 +21,15 @@ router.get('/', function(req, res, next) {
 
 router.post('/register', function (req, res, next) {
   // Add the user to our data store
-  var success = userModule.add(req.body.username, req.body.password);
-  if (!success)
-  {
-    next(new Error('User could not be created.'));
-    return;
-  }
-  // Send user to login page
-  console.log('user registered');
-  res.redirect('/');
+  userModule.add(req.body.username, req.body.password)
+      .then(function(){
+        console.log('user registered');
+        res.redirect('/');
+      })
+      .catch(function(err){
+        next(new Error('User could not be created.'));
+        return;
+      });
 });
 
 // This route will authenticate a user and create a session.
