@@ -15,14 +15,14 @@ function hashPassword (password)
 
 function findUser (name)
 {
-  return Users().where('username', name);
+  return Users().where('username', name).first();
 }
 
 function authenticateUser (username, password)
 {
   return findUser(username)
-      .then(function(users){
-        return bcrypt.compareSync(password, users[0].pass_hash);
+      .then(function(user){
+        return bcrypt.compareSync(password, user.pass_hash);
       });
 }
 

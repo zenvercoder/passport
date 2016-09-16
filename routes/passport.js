@@ -31,8 +31,8 @@ passport.use(new Local(function (username, password, done) {
 // Optionally you can error http://passportjs.org/docs#verify-callback
 // Value given for user parameter comes from LocalStrategy
 passport.serializeUser(function (userPromise, done) {
-    userPromise.then(function (users) {
-        done(null, users[0].username)
+    userPromise.then(function (user) {
+        done(null, user.username)
     });
     // Value given to done comes out in deserializeUser's username parameter
     // Value should be unique to identify a user
@@ -47,9 +47,9 @@ passport.serializeUser(function (userPromise, done) {
 // The parameter username here comes from serializeUser's done
 passport.deserializeUser(function (username, done) {
     users.find(username)
-        .then(function (users) {
+        .then(function (user) {
 // Value we pass to done is attached to req.user
-            done(null, users[0])
+            done(null, user)
         });
 
 });
