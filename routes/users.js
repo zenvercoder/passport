@@ -5,9 +5,6 @@ function Users(){
   return knex('users');
 }
 
-// datastore will be database table instead of an array in memory
-var id = 0;
-
 function hashPassword (password)
 {
   return bcrypt.hashSync(password, 10)

@@ -19,6 +19,16 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'My Dashboard App' });
 });
 
+router.get('/login_register', function(req, res, next) {
+  // Don't show login and register to logged in users
+  if (req.isAuthenticated())
+  {
+    res.redirect('/dashboard');
+    return;
+  }
+  res.render('login_register');
+});
+
 router.post('/register', function (req, res, next) {
   // Add the user to our data store
   userModule.add(req.body.username, req.body.password)

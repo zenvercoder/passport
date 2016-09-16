@@ -1,8 +1,42 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
 }
 
-a {
-  color: #00B7FF;
+.content {
+  overflow-y: auto;
+}
+
+
+
+
+
+
+
+/*themes https://material.google.com/style/color.html#color-themes */
+
+/*accent color: A0FFFD waterspout
+Text fields and cursors
+Text selection
+Progress bars
+Selection controls, buttons, and sliders
+Links*/
+
+/*gray color scheme
+700#616161
+800#424242
+900#212121*/
+
+.status_bar {
+
+}
+
+.header {
+
+}
+
+.card {
+
 }

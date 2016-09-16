@@ -2,9 +2,30 @@
 <html>
   <head>
     <title>{{title}}</title>
+      <link rel="stylesheet" href="/lib/material-design-lite/material.min.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    {{{body}}}
+  <div class="mdl-layout mdl-js mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+          <div class="mdl-layout__header-row">
+              <!-- Title -->
+              <span class="mdl-layout-title">{{title}}</span>
+              <!-- Add spacer, to align navigation to the right -->
+              <div class="mdl-layout-spacer"></div>
+              <!-- Navigation -->
+              <nav class="mdl-navigation">
+                  <a class="mdl-navigation__link" href="/login_register">login/register</a>
+              </nav>
+          </div>
+      </header>
+
+      <div class="content">
+          {{{body}}}
+      </div>
+  </div>
+
+    <script src="/lib/material-design-lite/material.min.js"></script>
   </body>
 </html>
