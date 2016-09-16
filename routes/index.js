@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
     res.redirect('/dashboard');
     return;
   }
-  res.render('index', { title: 'My Dashboard App' });
+  res.render('index', { title: 'Blog' });
 });
 
 router.get('/login_register', function(req, res, next) {

@@ -41,7 +41,7 @@ app.use(passport.session());
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-// exposing node_modules as lib
+// exposing node_modules as lib (serving static files in Express)
 app.use('/lib', express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/', routes);

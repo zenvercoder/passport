@@ -9,7 +9,15 @@ body {
   overflow-y: auto;
 }
 
+.cards {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
+.cards .mdl-card {
+  width: 100%;
+}
 
 
 
@@ -37,6 +45,3 @@ Links*/
 
 }
 
-.card {
-
-}
