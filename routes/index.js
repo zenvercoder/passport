@@ -18,36 +18,42 @@ router.get('/', function (req, res, next) {
     res.render('index', {title: 'Blog'});
 });
 
-router.get('/login_register', function (req, res, next) {
+router.get('/log_in', function (req, res, next) {
     // Don't show login and register to logged in users
     if (req.isAuthenticated()) {
         res.redirect('/dashboard');
         return;
     }
-    res.render('login_register');
+    res.render('log_in', {title: 'Blog'});
 });
 
-router.get('/new_post', function (req, res, next) {
-    // Don't show login and register to logged in users
-    if (req.isAuthenticated()) {
-        res.redirect('/new_post');
-        return;
-    }
-    res.render('new_post');
+router.get('/sign_up', function (req, res, next) {
+    res.render('sign_up', {title: 'Blog'});
 });
 
-router.post('/register', function (req, res, next) {
+router.post('/sign_up', function (req, res, next) {
     // Add the user to our data store
     userModule.add(req.body.username, req.body.password)
         .then(function () {
             console.log('user registered');
-            res.redirect('/');
+            res.redirect('/log_in');
         })
         .catch(function (err) {
             next(new Error('User could not be created.'));
             return;
         });
 });
+
+router.get('/new_post', function (req, res, next) {
+    // Don't show login and register to logged in users
+    if (req.isAuthenticated()) {
+        res.redirect('/log_in');
+        return;
+    }
+    res.render('new_post', {title: 'Blog'});
+});
+
+
 
 // This route will authenticate a user and create a session.
 // If successful, req.user will exist,

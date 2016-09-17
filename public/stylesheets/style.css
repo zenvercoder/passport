@@ -20,7 +20,10 @@ body {
   width: 100%;
 }
 
-
+.no_style {
+  text-decoration: none;
+  color: white;
+}
 
 
 
