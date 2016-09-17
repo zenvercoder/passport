@@ -15,7 +15,13 @@ router.get('/', function (req, res, next) {
         res.redirect('/dashboard');
         return;
     }
-    res.render('index', {title: 'Blog'});
+    res.render('index', {
+        title: 'Blog',
+        link1: '/log_in',
+        link1Name: 'login',
+        link2: '/sign_up',
+        link2Name: 'sign up'
+    });
 });
 
 router.get('/log_in', function (req, res, next) {
@@ -24,11 +30,34 @@ router.get('/log_in', function (req, res, next) {
         res.redirect('/dashboard');
         return;
     }
-    res.render('log_in', {title: 'Blog'});
+    res.render('log_in', {
+        title: 'Blog',
+        link1: '/',
+        link1Name: 'home',
+        link2: '/sign_up',
+        link2Name: 'sign up'
+    });
 });
 
+// This route will authenticate a user and create a session.
+// If successful, req.user will exist,
+// redirect to /dashboard,
+// and req.isAuthenticated() will return true
+router.post('/login', passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/fail'
+    })
+);
+
+
 router.get('/sign_up', function (req, res, next) {
-    res.render('sign_up', {title: 'Blog'});
+    res.render('sign_up', {
+        title: 'Blog',
+        link1: '/',
+        link1Name: 'home',
+        link2: '/log_in',
+        link2Name: 'login'
+    });
 });
 
 router.post('/sign_up', function (req, res, next) {
@@ -46,24 +75,19 @@ router.post('/sign_up', function (req, res, next) {
 
 router.get('/new_post', function (req, res, next) {
     // Don't show login and register to logged in users
-    if (req.isAuthenticated()) {
+    if (!req.isAuthenticated()) {
         res.redirect('/log_in');
         return;
     }
-    res.render('new_post', {title: 'Blog'});
+    res.render('new_post', {
+        title: 'Blog',
+        link1: '/',
+        link1Name: 'home',
+        link2: '/dashboard',
+        link2Name: 'my dashboard'
+    });
 });
 
-
-
-// This route will authenticate a user and create a session.
-// If successful, req.user will exist,
-// redirect to /dashboard,
-// and req.isAuthenticated() will return true
-router.post('/login', passport.authenticate('local', {
-        successRedirect: '/dashboard',
-        failureRedirect: '/fail'
-    })
-);
 
 router.get('/logout', function (req, res) {
     // Clear the session and unauthenticate the user
@@ -78,7 +102,14 @@ router.get('/dashboard', function (req, res, next) {
         return;
     }
     // req.user will be the value from deserializeUser
-    res.render('dashboard', {user: req.user})
+    res.render('dashboard', {
+        user: req.user,
+        title: 'Blog',
+        link1: '/new_post',
+        link1Name: 'create post',
+        link2: '/logout',
+        link2Name: 'logout'
+    })
 });
 
 module.exports = router;

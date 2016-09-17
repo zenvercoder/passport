@@ -1,4 +1,11 @@
-<a href="/logout">Logout</a>
-<h1>Your Dashboard</h1>
-<p>Welcome {{user.username}}!</p>
-<p>Your password hash is {{user.pass_hash}}.</p>
+
+<div class="cards">
+    <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Welcome {{user.username}}! Your Dashboard</h2>
+        </div>
+        <div class="mdl-card__title">
+            <p>Your password hash is {{user.pass_hash}}.</p>
+        </div>
+    </div>
+</div>
