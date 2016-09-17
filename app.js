@@ -7,12 +7,12 @@ var bodyParser = require('body-parser');
 
 // added 3 lines
 var session = require('express-session');
-var passport = require('./routes/passport');
+var passport = require('./server/passport');
 // 9-10-16
 var bcrypt = require('bcrypt');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./server/users');
 
 var app = express();
 

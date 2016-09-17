@@ -1,13 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('./passport');
-var userModule = require('./users')
+var passport = require('../server/passport');
+var userModule = require('../server/users');
+var blogPost = require('../server/blog_post');
 
-
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
 
 router.get('/', function (req, res, next) {
     // Don't show login and register to logged in users
@@ -86,6 +82,22 @@ router.get('/new_post', function (req, res, next) {
         link2: '/dashboard',
         link2Name: 'my dashboard'
     });
+});
+
+router.post('/new_post', function (req, res, next) {
+    // Add the user to our data store
+    if (req.isAuthenticated()) {
+        blogPost.add(req.body.title, req.body.body)
+            .then(function () {
+                console.log('blog post added');
+                res.redirect('/');
+                //res.render('/');
+            })
+            .catch(function (err) {
+                next(new Error('blog post could not be created.'));
+                return;
+            });
+    }
 });
 
 
