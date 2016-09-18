@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>{{title}}</title>
-      <link rel="stylesheet" href="/lib/material-design-lite/material.min.css">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-  <div class="mdl-layout mdl-js mdl-layout--fixed-header">
-      <header class="mdl-layout__header">
-          <div class="mdl-layout__header-row">
-              <!-- Title -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/lib/material-design-lite/material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+<div class="mdl-layout mdl-js-layout">
+    <div class="mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
               <span class="mdl-layout-title">
                   <a href="/" class="no_style">{{title}}</a>
               </span>
-              <!-- Add spacer, to align navigation to the right -->
-              <div class="mdl-layout-spacer"></div>
-              <!-- Navigation -->
-              <nav class="mdl-navigation">
-                  <a class="mdl-navigation__link" href="{{link1}}">{{link1Name}}</a>
-              </nav>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation -->
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="{{link1}}">{{link1Name}}</a>
+                </nav>
 
-              <nav class="mdl-navigation">
-                  <a class="mdl-navigation__link" href="{{link2}}">{{link2Name}}</a>
-              </nav>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="{{link2}}">{{link2Name}}</a>
+                </nav>
 
-              <nav class="mdl-navigation">
-                  <a class="mdl-navigation__link" href="{{link3}}">{{link3Name}}</a>
-              </nav>
-          </div>
-      </header>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="{{link3}}">{{link3Name}}</a>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <div class="content">
+        {{{body}}}
+    </div>
+</div>
 
-      <div class="content">
-          {{{body}}}
-      </div>
-  </div>
-
-    <script src="/lib/material-design-lite/material.min.js"></script>
-  </body>
+<script src="/lib/material-design-lite/material.min.js"></script>
+</body>
 </html>

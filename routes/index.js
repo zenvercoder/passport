@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
                 params.link1Name = 'my dashboard';
                 params.link2 = '/new_post';
                 params.link2Name = 'create new post';
-                params.link3 = '/log_out';
+                params.link3 = '/logout';
                 params.link3Name = 'log out';
             }
             params.posts = posts;
