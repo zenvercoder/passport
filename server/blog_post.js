@@ -1,23 +1,26 @@
 var knex = require('./knex');
 
-function newPost(){
+function Posts(){
   return knex('blog_post');
 }
 
-function addPost (title, body)
+function addPost (title, body, user_id)
 {
   if (!title || !body)
   {
     return false
   }
-  return newPost().insert({
+  return Posts().insert({
     title: title,
-    body: body
+    body: body,
+    user_id: user_id
   });
 
 }
 
+
 module.exports = {
-  add: addPost
+  add: addPost,
+  getPosts: Posts
 };
 

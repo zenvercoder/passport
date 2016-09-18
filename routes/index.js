@@ -6,18 +6,28 @@ var blogPost = require('../server/blog_post');
 
 
 router.get('/', function (req, res, next) {
-    // Don't show login and register to logged in users
-    if (req.isAuthenticated()) {
-        res.redirect('/dashboard');
-        return;
-    }
-    res.render('index', {
+    var params = {
         title: 'Blog',
         link1: '/log_in',
         link1Name: 'login',
         link2: '/sign_up',
         link2Name: 'sign up'
-    });
+    };
+    blogPost.getPosts()
+        .then(function(posts){
+            // Don't show login and register to logged in users
+            if (req.isAuthenticated()) {
+                params.link1 = '/dashboard';
+                params.link1Name = 'my dashboard';
+                params.link2 = '/new_post';
+                params.link2Name = 'create new post';
+                params.link3 = '/log_out';
+                params.link3Name = 'log out';
+            }
+            params.posts = posts;
+            res.render('index', params);
+        });
+
 });
 
 router.get('/log_in', function (req, res, next) {
@@ -87,7 +97,7 @@ router.get('/new_post', function (req, res, next) {
 router.post('/new_post', function (req, res, next) {
     // Add the user to our data store
     if (req.isAuthenticated()) {
-        blogPost.add(req.body.title, req.body.body)
+        blogPost.add(req.body.title, req.body.body, req.user.id)
             .then(function () {
                 console.log('blog post added');
                 res.redirect('/');
