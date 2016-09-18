@@ -19,17 +19,25 @@
                 <!-- Add spacer, to align navigation to the right -->
                 <div class="mdl-layout-spacer"></div>
                 <!-- Navigation -->
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="{{link1}}">{{link1Name}}</a>
-                </nav>
-
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="{{link2}}">{{link2Name}}</a>
-                </nav>
-
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="{{link3}}">{{link3Name}}</a>
-                </nav>
+                <!-- Right aligned menu below button -->
+                <button id="demo-menu-lower-right"
+                        class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">more_vert</i>
+                </button>
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                    for="demo-menu-lower-right">
+                    <li class="mdl-menu__item">
+                        <a href="{{link1}}">{{link1Name}}</a>
+                    </li>
+                    <li class="mdl-menu__item">
+                        <a href="{{link2}}">{{link2Name}}</a>
+                    </li>
+                    {{#if link3}}
+                        <li class="mdl-menu__item">
+                            <a href="{{link3}}">{{link3Name}}</a>
+                        </li>
+                    {{/if}}
+                </ul>
             </div>
         </header>
     </div>

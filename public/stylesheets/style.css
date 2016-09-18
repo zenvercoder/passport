@@ -27,8 +27,10 @@ body {
   color: white;
 }
 
-
-
+.mdl-menu__item > a {
+  text-decoration: none;
+  color: rgba(0,0,0,.54);
+}
 
 /*themes https://material.google.com/style/color.html#color-themes */
 
