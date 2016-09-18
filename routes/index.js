@@ -7,7 +7,7 @@ var blogPost = require('../server/blog_post');
 
 router.get('/', function (req, res, next) {
     var params = {
-        title: 'Blog',
+        title: 'Code Stories',
         link1: '/log_in',
         link1Name: 'login',
         link2: '/sign_up',
@@ -37,7 +37,7 @@ router.get('/log_in', function (req, res, next) {
         return;
     }
     res.render('log_in', {
-        title: 'Blog',
+        title: 'Code Stories',
         link1: '/',
         link1Name: 'home',
         link2: '/sign_up',
@@ -58,7 +58,7 @@ router.post('/login', passport.authenticate('local', {
 
 router.get('/sign_up', function (req, res, next) {
     res.render('sign_up', {
-        title: 'Blog',
+        title: 'Code Stories',
         link1: '/',
         link1Name: 'home',
         link2: '/log_in',
@@ -86,7 +86,7 @@ router.get('/new_post', function (req, res, next) {
         return;
     }
     res.render('new_post', {
-        title: 'Blog',
+        title: 'Code Stories',
         link1: '/',
         link1Name: 'home',
         link2: '/dashboard',
@@ -126,7 +126,7 @@ router.get('/dashboard', function (req, res, next) {
     // req.user will be the value from deserializeUser
     res.render('dashboard', {
         user: req.user,
-        title: 'Blog',
+        title: 'Code Stories',
         link1: '/new_post',
         link1Name: 'create post',
         link2: '/logout',

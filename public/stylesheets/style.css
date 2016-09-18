@@ -19,6 +19,7 @@ body {
 .cards .mdl-card,
 .full-width {
   width: 100%;
+  margin-bottom: 30px;
 }
 
 .no_style {
