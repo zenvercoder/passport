@@ -16,7 +16,7 @@
 
 * 9-13-16 spent a lot of time going down rabbit holes yesterday, trying to understand every line of code. I will do more of that on round two. Must get the whole thing working first.
 
-
+* 9-18-16 [heroku link](https://code-stories.herokuapp.com/)
 
 ### Notes
 
