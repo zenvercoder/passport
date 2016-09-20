@@ -8,6 +8,10 @@ var app = require('../app');
 var debug = require('debug')('passport:server');
 var http = require('http');
 
+// already have a debug and a server... how to handle?
+//var debug = require('debug')('passport:server');
+var server = require('http').createServer();
+
 /**
  * Get port from environment and store in Express.
  */
@@ -20,6 +24,10 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+// add for chat
+var io = require('../socket.js');
+io.attach(server);
 
 /**
  * Listen on provided port, on all network interfaces.

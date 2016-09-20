@@ -134,5 +134,11 @@ router.get('/dashboard', function (req, res, next) {
     })
 });
 
+router.get('/chat', function(req, res, next) {
+    res.render('chat', { title: 'Socket' });
+});
+
+//router.post('/chat', )
+
 module.exports = router;
 
