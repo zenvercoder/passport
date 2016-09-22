@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('../server/passport');
 var userModule = require('../server/users');
 var blogPost = require('../server/blog_post');
-
+var favicon = require('serve-favicon');
 
 router.get('/', function (req, res, next) {
     var params = {
@@ -27,6 +27,10 @@ router.get('/', function (req, res, next) {
             params.posts = posts;
             res.render('index', params);
         });
+
+});
+
+router.get('/post/:id', function(req, res, next) {
 
 });
 

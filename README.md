@@ -20,6 +20,8 @@
 
 * 9-18-16 [heroku link](https://code-stories.herokuapp.com/)
 
+*
+
 ### Notes
 
 The first working iteration was mostly derived from [this repo](https://github.com/dannyfritz/passport-example/tree/memory) by [Danny Fritz](https://github.com/dannyfritz)
@@ -29,6 +31,19 @@ I had to tweak it here and there because straight up copying it didn't work the 
 One huge piece of advice that I got that really helped was "If you're going to try to make someone else's code work, look at the package.json" This was the final piece that I was missing. I thought I had installed all of the necessary dependencies in the first place but something wasn't exactly right.
 
 I'm about to work on iteration 2 now. Going to delete the entire thing and start again from scratch. Hopefully round two will be a little bit faster this time.
+
+10-22-16 add .env research what .env even is. I know it's for... think it's something about routes? let's go read...
+"a zero dependency module that loads environment variables into process.env, storing configuration in the environment separate from code"
+So yeah... glad I read it. Had a vague idea now I'm getting it a lil more.
+ `npm install dotenv --save` heyyy paste is now working. "As early as possible in your application, require and configure dotenv." oops. project is 85% complete lol.
+
+[dotenv]() ...aaaand now paste isn't working for me. Silly how I depend on something so small and it basically ruins everything if it doesn't work lol. anywhoo. I'll fix that too.
+
+Go to the knexfile.js file. set production.connection: process.env.DATABASE_URL,
+
+`require('dotenv').config()` to the top of the knexfile.js file
+`
+
 
 ### A brief look at package.json
 

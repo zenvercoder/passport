@@ -21,3 +21,6 @@ Icon
 
 npm-debug.log
 .idea/
+
+.env
+
