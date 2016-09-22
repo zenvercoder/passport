@@ -14,6 +14,9 @@ var bcrypt = require('bcrypt');
 var routes = require('./routes/index');
 var users = require('./server/users');
 
+// 9-22-16
+var env = require('dotenv').config();
+
 var app = express();
 
 // view engine setup
@@ -29,7 +32,7 @@ app.use(cookieParser());
 
 // Configure express session
  app.use(session({
-   secret: 'keyboard cat',
+   secret: process.env.sessionSecret,
    saveUninitialized: true,
    resave: false
  }));

@@ -42,6 +42,8 @@ So yeah... glad I read it. Had a vague idea now I'm getting it a lil more.
 Go to the knexfile.js file. set production.connection: process.env.DATABASE_URL,
 
 `require('dotenv').config()` to the top of the knexfile.js file
+
+
 `
 
 
