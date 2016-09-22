@@ -32,6 +32,10 @@ body {
   color: rgba(0,0,0,.54);
 }
 
+.post_title {
+  color: rgba(0,0,0,.74);
+}
+
 /*themes https://material.google.com/style/color.html#color-themes */
 
 /*accent color: A0FFFD waterspout

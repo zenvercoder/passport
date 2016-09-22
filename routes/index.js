@@ -35,7 +35,13 @@ router.get('/post/:id', function(req, res, next) {
     blogPost.getPost(req.params.id)
         .then(function(post){
             res.render('post', {
-                post: post
+                title: 'Code Stories',
+                link1: '/logout',
+                link1Name: 'log out',
+                link2: '/dashboard',
+                link2Name: 'my dashboard',
+                post: post,
+                id: req.params.id
             });
         });
 });
