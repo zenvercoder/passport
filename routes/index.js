@@ -6,44 +6,90 @@ var blogPost = require('../server/blog_post');
 var favicon = require('serve-favicon');
 
 router.get('/', function (req, res, next) {
-    var params = {
-        title: 'Code Stories',
-        link1: '/log_in',
-        link1Name: 'login',
-        link2: '/sign_up',
-        link2Name: 'sign up'
-    };
-    blogPost.getPosts()
-        .then(function(posts){
-            // Don't show login and register to logged in users
-            if (req.isAuthenticated()) {
-                params.link1 = '/dashboard';
-                params.link1Name = 'my dashboard';
-                params.link2 = '/new_post';
-                params.link2Name = 'create new post';
-                params.link3 = '/logout';
-                params.link3Name = 'log out';
-            }
-            params.posts = posts;
-            res.render('index', params);
-        });
+    //var params = {
+    //    title: 'Code Stories',
+    //    link1: '/log_in',
+    //    link1Name: 'login',
+    //    link2: '/sign_up',
+    //    link2Name: 'sign up'
+    //};
+    //blogPost.getPosts()
+    //    .then(function (posts) {
+    //        // Don't show login and register to logged in users
+    //        if (req.isAuthenticated()) {
+    //            params.link1 = '/dashboard';
+    //            params.link1Name = 'my dashboard';
+    //            params.link2 = '/new_post';
+    //            params.link2Name = 'create new post';
+    //            params.link3 = '/logout';
+    //            params.link3Name = 'log out';
+    //            params.isUser = 'true';
+    //        }
+    //        params.posts = posts;
+    //        res.render('index', params);
+    //    });
 
+    if (req.isAuthenticated()) {
+        blogPost.getPosts()
+            .then(function (posts) {
+                res.render('index', {
+                    title: 'Code Stories',
+                    link1: '/logout',
+                    link1Name: 'log out',
+                    link2: '/dashboard',
+                    link2Name: 'my dashboard',
+                    posts: posts,
+                    user_id: req.user.id
+                });
+                console.log('index user_id= ' + req.user.id);
+            });
+    } else {
+        blogPost.getPosts()
+            .then(function (posts) {
+                res.render('index', {
+                    title: 'Code Stories',
+                    link1: '/log_in',
+                    link1Name: 'log in',
+                    link2: '/sign_up',
+                    link2Name: 'sign up',
+                    posts: posts,
+                    user_id: false
+                });
+            });
+    }
 });
 
-router.get('/post/:id', function(req, res, next) {
-    console.log('id= ' + req.params.id);
-    blogPost.getPost(req.params.id)
-        .then(function(post){
-            res.render('post', {
-                title: 'Code Stories',
-                link1: '/logout',
-                link1Name: 'log out',
-                link2: '/dashboard',
-                link2Name: 'my dashboard',
-                post: post,
-                id: req.params.id
+router.get('/post/:id', function (req, res, next) {
+    console.log('post_id= ' + req.params.id);
+
+    if (req.isAuthenticated()) {
+        blogPost.getPost(req.params.id)
+            .then(function (post) {
+                res.render('post', {
+                    title: 'Code Stories',
+                    link1: '/logout',
+                    link1Name: 'log out',
+                    link2: '/dashboard',
+                    link2Name: 'my dashboard',
+                    post: post,
+                    user: req.user.id
+                });
+                console.log('user_id= ' + req.user.id);
             });
-        });
+    } else {
+        blogPost.getPost(req.params.id)
+            .then(function (post) {
+                res.render('post', {
+                    title: 'Code Stories',
+                    link1: '/log_in',
+                    link1Name: 'log in',
+                    link2: '/sign_up',
+                    link2Name: 'sign up',
+                    post: post,
+                    id: req.params.id
+                });
+            });
+    }
 });
 
 router.get('/log_in', function (req, res, next) {
@@ -117,7 +163,6 @@ router.post('/new_post', function (req, res, next) {
             .then(function () {
                 console.log('blog post added');
                 res.redirect('/');
-                //res.render('/');
             })
             .catch(function (err) {
                 next(new Error('blog post could not be created.'));
@@ -150,8 +195,8 @@ router.get('/dashboard', function (req, res, next) {
     })
 });
 
-router.get('/chat', function(req, res, next) {
-    res.render('chat', { title: 'Socket' });
+router.get('/chat', function (req, res, next) {
+    res.render('chat', {title: 'Code Stories'});
 });
 
 //router.post('/chat', )

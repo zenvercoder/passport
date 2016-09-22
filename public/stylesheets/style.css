@@ -36,6 +36,16 @@ body {
   color: rgba(0,0,0,.74);
 }
 
+.material-icons.md-dark {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.material-icons.md-dark.md-inactive {
+  color: rgba(0, 0, 0, 0.26);
+}
+
+
+
 /*themes https://material.google.com/style/color.html#color-themes */
 
 /*accent color: A0FFFD waterspout

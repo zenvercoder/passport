@@ -8,36 +8,30 @@
             {{post.body}}
         </div>
 
-        {{#if id}}
-            <div class="cards">
+        {{#if user}}
 
-                <div class="mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        Like
-                    </a>
-                </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">favorite</i>
+                </a>
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">create</i>
+                </a>
 
-                <div class="mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        edit
-                    </a>
-                </div>
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">comment</i>
+                </a>
 
-                <div class="mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        comment
-                    </a>
-                </div>
+                <!--this is going to be comment-->
+                <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">-->
+                    <!--<textarea class="mdl-textfield__input" type="text" rows="3" id="commentBody"-->
+                              <!--name="commentBody"></textarea>-->
+                    <!--<label class="mdl-textfield__label" for="commentBody">Comment</label>-->
+                <!--</div>-->
 
             </div>
+
         {{/if}}
-
-
-        <!-- Colored FAB button with ripple -->
-        <button type="submit"
-                class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-            <i class="material-icons">add</i>
-        </button>
     </div>
 </div>
 

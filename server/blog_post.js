@@ -1,6 +1,7 @@
 var knex = require('./knex');
 
 function Posts(){
+
   return knex('blog_post');
 }
 

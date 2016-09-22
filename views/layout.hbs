@@ -4,7 +4,12 @@
     <title>{{title}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/lib/material-design-lite/material.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!--will it work without this? its almost the same as the other one below-->
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <link rel='stylesheet' href='/stylesheets/style.css'/>
 </head>
 <body>
@@ -29,9 +34,11 @@
                     <li class="mdl-menu__item">
                         <a href="{{link1}}">{{link1Name}}</a>
                     </li>
-                    <li class="mdl-menu__item">
-                        <a href="{{link2}}">{{link2Name}}</a>
-                    </li>
+                    {{#if link2}}
+                        <li class="mdl-menu__item">
+                            <a href="{{link2}}">{{link2Name}}</a>
+                        </li>
+                    {{/if}}
                     {{#if link3}}
                         <li class="mdl-menu__item">
                             <a href="{{link3}}">{{link3Name}}</a>
