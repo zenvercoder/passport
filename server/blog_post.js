@@ -18,9 +18,15 @@ function addPost (title, body, user_id)
 
 }
 
+function getPost(id){
+  return Posts().where('id', id).first();
+
+}
+
 
 module.exports = {
   add: addPost,
-  getPosts: Posts
+  getPosts: Posts,
+  getPost: getPost
 };
 

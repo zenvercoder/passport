@@ -31,7 +31,13 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/post/:id', function(req, res, next) {
-
+    console.log('id= ' + req.params.id);
+    blogPost.getPost(req.params.id)
+        .then(function(post){
+            res.render('post', {
+                post: post
+            });
+        });
 });
 
 router.get('/log_in', function (req, res, next) {
