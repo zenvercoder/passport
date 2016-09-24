@@ -1,47 +1,51 @@
 var knex = require('./knex');
 
-function Posts(){
+function Posts() {
 
-  return knex('blog_post');
+    return knex('blog_post');
 }
 
 
-function addPost (title, body, user_id)
-{
-  if (!title || !body)
-  {
-    return false
-  }
-  return Posts().insert({
-    title: title,
-    body: body,
-    user_id: user_id
-  });
+function addPost(title, body, user_id) {
+    if (!title || !body) {
+        return false
+    }
+    return Posts().insert({
+        title: title,
+        body: body,
+        user_id: user_id
+    });
 
 }
 
-function getPost(id){
-  return Posts().where('id', id).first();
+function getPost(id) {
+    return Posts().where('id', id).first();
 
 }
 
-function getPosts(){
-  return Posts().orderBy('id', 'desc')
+function getPosts() {
+    return Posts().orderBy('id', 'desc')
 }
 
 
-function updatePost(post){
+function updatePost(post) {
     return Posts().where('id', post.id)
         .update({
-          body: post.body
+            body: post.body
         })
+}
+
+function deletePost(post_id) {
+    return Posts().where('id', post_id)
+        .del();
 }
 
 
 module.exports = {
-  add: addPost,
-  getPosts: getPosts,
-  getPost: getPost,
-  updatePost: updatePost
+    add: addPost,
+    getPosts: getPosts,
+    getPost: getPost,
+    updatePost: updatePost,
+    deletePost: deletePost
 };
 

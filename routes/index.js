@@ -139,6 +139,25 @@ router.post('/post/:id/edit', function (req, res, next) {
     }
 });
 
+router.post('/post/:id/delete', function (req, res, next) {
+    // Add the user to our data store
+    if (req.isAuthenticated()){
+        // instead of add, do update
+        blogPost.getPost(req.params.id)
+            .then(function(post){
+                if(post.user_id == req.user.id){
+                    return blogPost.deletePost(post.id);
+                }
+                else{
+                    res.redirect('/error', {message: 'posts can only be deleted by author'});
+                    return this;
+                }
+        }).then(function(){
+            res.redirect('/');
+        });
+    }
+});
+
 router.get('/log_in', function (req, res, next) {
     // Don't show login and register to logged in users
     if (req.isAuthenticated()) {
