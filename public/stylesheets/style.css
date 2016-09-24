@@ -44,7 +44,9 @@ body {
   color: rgba(0, 0, 0, 0.26);
 }
 
-
+.username {
+  font-style: oblique;
+}
 
 /*themes https://material.google.com/style/color.html#color-themes */
 

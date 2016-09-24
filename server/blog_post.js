@@ -19,12 +19,20 @@ function addPost(title, body, user_id) {
 }
 
 function getPost(id) {
-    return Posts().where('id', id).first();
+    return Posts().where('blog_post.id', id)
+        .join('users','blog_post.user_id', '=', 'users.id')
+        .select('blog_post.body', 'blog_post.created_at', 'blog_post.updated_at', 'blog_post.upvote_count',
+            'blog_post.user_id', 'blog_post.title', 'users.username','blog_post.id')
+        .first();
 
 }
 
 function getPosts() {
-    return Posts().orderBy('id', 'desc')
+    return Posts()
+        .join('users','blog_post.user_id', '=', 'users.id')
+        .select('blog_post.body', 'blog_post.created_at', 'blog_post.updated_at', 'blog_post.upvote_count',
+            'blog_post.user_id', 'blog_post.title', 'users.username','blog_post.id')
+        .orderBy('id', 'desc');
 }
 
 

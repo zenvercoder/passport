@@ -3,31 +3,10 @@ var router = express.Router();
 var passport = require('../server/passport');
 var userModule = require('../server/users');
 var blogPost = require('../server/blog_post');
+var comments = require('../server/comment');
 var favicon = require('serve-favicon');
 
 router.get('/', function (req, res, next) {
-    //var params = {
-    //    title: 'Code Stories',
-    //    link1: '/log_in',
-    //    link1Name: 'login',
-    //    link2: '/sign_up',
-    //    link2Name: 'sign up'
-    //};
-    //blogPost.getPosts()
-    //    .then(function (posts) {
-    //        // Don't show login and register to logged in users
-    //        if (req.isAuthenticated()) {
-    //            params.link1 = '/dashboard';
-    //            params.link1Name = 'my dashboard';
-    //            params.link2 = '/new_post';
-    //            params.link2Name = 'create new post';
-    //            params.link3 = '/logout';
-    //            params.link3Name = 'log out';
-    //            params.isUser = 'true';
-    //        }
-    //        params.posts = posts;
-    //        res.render('index', params);
-    //    });
 
     if (req.isAuthenticated()) {
         blogPost.getPosts()
@@ -62,49 +41,46 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/post/:id', function (req, res, next) {
-    console.log('post_id= ' + req.params.id);
 
+    var params = {
+        title: 'Code Stories',
+        link1: '/log_in',
+        link1Name: 'log in',
+        link2: '/sign_up',
+        link2Name: 'sign up',
+        id: req.params.id
+    }
 
     if (req.isAuthenticated()) {
-        blogPost.getPost(req.params.id)
-            .then(function (post) {
-                res.render('post', {
-                    title: 'Code Stories',
-                    link1: '/logout',
-                    link1Name: 'log out',
-                    link2: '/dashboard',
-                    link2Name: 'my dashboard',
-                    post: post,
-                    owner: req.user.id == post.user_id,
-                    user: req.user.id
-                });
-                console.log('user_id= ' + req.user.id);
-            });
-    } else {
-        blogPost.getPost(req.params.id)
-            .then(function (post) {
-                res.render('post', {
-                    title: 'Code Stories',
-                    link1: '/log_in',
-                    link1Name: 'log in',
-                    link2: '/sign_up',
-                    link2Name: 'sign up',
-                    post: post,
-                    id: req.params.id,
-
-                });
-            });
+        params.link1 = '/log_out';
+        params.link1Name = 'log out';
+        params.link2 = '/dashboard';
+        params.link2Name = 'my dashboard';
+        params.user = req.user.id;
     }
+    blogPost.getPost(req.params.id)
+        .then(function (post) {
+            // set post data on params
+            params.owner = params.user == post.user_id;
+
+            params.post = post;
+            //    get comments for the post
+            return comments.getComments(req.params.id);
+        })
+        .then(function (comments) {
+            params.comments = comments;
+            res.render('post', params);
+        })
+
 });
 
 router.get('/post/:id/edit', function (req, res, next) {
-    console.log('post_id= ' + req.params.id);
 
     if (req.isAuthenticated()) {
         blogPost.getPost(req.params.id)
             .then(function (post) {
 
-                if(!req.user.id == post.user_id){
+                if (!req.user.id == post.user_id) {
                     console.log('user ' + req.user.id + 'is not post owner');
 
                     res.redirect('/');
@@ -133,7 +109,7 @@ router.post('/post/:id/edit', function (req, res, next) {
         blogPost.updatePost({
             id: req.params.id,
             body: req.body.body
-        }).then(function(){
+        }).then(function () {
             res.redirect('/post/' + req.params.id)
         });
     }
@@ -141,20 +117,51 @@ router.post('/post/:id/edit', function (req, res, next) {
 
 router.post('/post/:id/delete', function (req, res, next) {
     // Add the user to our data store
-    if (req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         // instead of add, do update
         blogPost.getPost(req.params.id)
-            .then(function(post){
-                if(post.user_id == req.user.id){
+            .then(function (post) {
+                if (post.user_id == req.user.id) {
                     return blogPost.deletePost(post.id);
                 }
-                else{
+                else {
                     res.redirect('/error', {message: 'posts can only be deleted by author'});
                     return this;
                 }
-        }).then(function(){
+            }).then(function () {
             res.redirect('/');
         });
+    }
+});
+
+router.get('/post/:id/comment', function (req, res, next) {
+    if (req.isAuthenticated()) {
+        blogPost.getPost(req.params.id)
+            .then(function (post) {
+                res.render('comment', {
+                    title: 'Code Stories',
+                    link1: '/logout',
+                    link1Name: 'log out',
+                    link2: '/dashboard',
+                    link2Name: 'my dashboard',
+                    post: post,
+                    owner: req.user.id == post.user_id,
+                    user: req.user.id
+                });
+            });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/post/:id/comment', function (req, res, next) {
+    if (req.isAuthenticated()) {
+        comments.add(req.params.id, req.user.id, req.body.body)
+            .then(function () {
+                res.redirect('/post/' + req.params.id);
+            });
+    } else {
+        res.render('/log_in');
     }
 });
 
