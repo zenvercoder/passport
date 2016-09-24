@@ -1,0 +1,28 @@
+<!-- Simple Textfield -->
+<div class="cards">
+    <div class="mdl-card mdl-shadow--2dp">
+        <form action="edit" method="POST">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">{{post.title}}</h2>
+            </div>
+
+
+            <div class="mdl-card__supporting-text">
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+                    <textarea class="mdl-textfield__input" type="text" rows="10"
+                              id="body" name="body">{{post.body}}</textarea>
+                    <label class="mdl-textfield__label" for="body">Your Story</label>
+                </div>
+            </div>
+
+            <!-- Colored FAB button with ripple -->
+            <button type="submit"
+                    class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                <i class="material-icons">save</i>
+            </button>
+        </form>
+    </div>
+</div>
+
+

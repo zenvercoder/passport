@@ -38,6 +38,8 @@ router.get('/', function (req, res, next) {
                     link1Name: 'log out',
                     link2: '/dashboard',
                     link2Name: 'my dashboard',
+                    link3: '/new_post',
+                    link3Name: 'create post',
                     posts: posts,
                     user_id: req.user.id
                 });
@@ -62,6 +64,7 @@ router.get('/', function (req, res, next) {
 router.get('/post/:id', function (req, res, next) {
     console.log('post_id= ' + req.params.id);
 
+
     if (req.isAuthenticated()) {
         blogPost.getPost(req.params.id)
             .then(function (post) {
@@ -72,6 +75,7 @@ router.get('/post/:id', function (req, res, next) {
                     link2: '/dashboard',
                     link2Name: 'my dashboard',
                     post: post,
+                    owner: req.user.id == post.user_id,
                     user: req.user.id
                 });
                 console.log('user_id= ' + req.user.id);
@@ -86,9 +90,52 @@ router.get('/post/:id', function (req, res, next) {
                     link2: '/sign_up',
                     link2Name: 'sign up',
                     post: post,
-                    id: req.params.id
+                    id: req.params.id,
+
                 });
             });
+    }
+});
+
+router.get('/post/:id/edit', function (req, res, next) {
+    console.log('post_id= ' + req.params.id);
+
+    if (req.isAuthenticated()) {
+        blogPost.getPost(req.params.id)
+            .then(function (post) {
+
+                if(!req.user.id == post.user_id){
+                    console.log('user ' + req.user.id + 'is not post owner');
+
+                    res.redirect('/');
+                    return;
+                }
+                res.render('edit_post', {
+                    title: 'Code Stories',
+                    link1: '/logout',
+                    link1Name: 'log out',
+                    link2: '/dashboard',
+                    link2Name: 'my dashboard',
+                    post: post,
+                });
+                console.log('user_id= ' + req.user.id);
+            });
+    } else {
+        // not authenticated
+        res.redirect('/');
+    }
+});
+
+router.post('/post/:id/edit', function (req, res, next) {
+    // Add the user to our data store
+    if (req.isAuthenticated()) {
+        // instead of add, do update
+        blogPost.updatePost({
+            id: req.params.id,
+            body: req.body.body
+        }).then(function(){
+            res.redirect('/post/' + req.params.id)
+        });
     }
 });
 
