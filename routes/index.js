@@ -56,19 +56,22 @@ router.get('/post/:id', function (req, res, next) {
         params.link1Name = 'log out';
         params.link2 = '/dashboard';
         params.link2Name = 'my dashboard';
-        params.user = req.user.id;
+        params.user_id = req.user.id;
     }
     blogPost.getPost(req.params.id)
         .then(function (post) {
             // set post data on params
-            params.owner = params.user == post.user_id;
+            params.owner = params.user_id == post.user_id;
 
             params.post = post;
             //    get comments for the post
             return comments.getComments(req.params.id);
         })
         .then(function (comments) {
-            params.comments = comments;
+            params.comments = comments.map(function(comment){
+                comment.owner = params.user_id == comment.user_id;
+                return comment;
+            });
             res.render('post', params);
         })
 
@@ -138,7 +141,7 @@ router.get('/post/:id/comment', function (req, res, next) {
     if (req.isAuthenticated()) {
         blogPost.getPost(req.params.id)
             .then(function (post) {
-                res.render('comment', {
+                res.render('new_comment', {
                     title: 'Code Stories',
                     link1: '/logout',
                     link1Name: 'log out',
@@ -146,7 +149,7 @@ router.get('/post/:id/comment', function (req, res, next) {
                     link2Name: 'my dashboard',
                     post: post,
                     owner: req.user.id == post.user_id,
-                    user: req.user.id
+                    user_id: req.user.id
                 });
             });
     } else {
@@ -164,6 +167,62 @@ router.post('/post/:id/comment', function (req, res, next) {
         res.render('/log_in');
     }
 });
+
+router.get('/comment/:comment_id/edit_comment', function (req, res, next) {
+    if (req.isAuthenticated()) {
+        //update comment does this:
+        //return Comments().where('id', comment.id).update({body: comment.comment_body})
+        comments.getComment(req.params.comment_id)
+            .then(function (comment) {
+            res.render('edit_comment', {
+                title: 'Code Stories',
+                link1: '/logout',
+                link1Name: 'log out',
+                link2: '/dashboard',
+                link2Name: 'my dashboard',
+                id: req.params.id,
+                comment: comment
+            });
+        });
+    } else {
+        // not authenticated
+        res.redirect('/');
+    }
+});
+
+router.post('/post/:id/comment/:user_id/edit', function (req, res, next) {
+    // Add the user to our data store
+    if (req.isAuthenticated()) {
+        // instead of add, do update
+        blogPost.updatePost({
+            id: req.params.id,
+            body: req.body.body
+        }).then(function () {
+            res.redirect('/post/' + req.params.id)
+        });
+    }
+});
+
+router.post('/post/:id/comment/:id/delete', function (req, res, next) {
+    // Add the user to our data store
+    if (req.isAuthenticated()) {
+        // instead of add, do update
+        blogPost.getPost(req.params.id)
+            .then(function (post) {
+                if (post.user_id == req.user.id) {
+                    return blogPost.deletePost(post.id);
+                }
+                else {
+                    res.redirect('/error', {message: 'posts can only be deleted by author'});
+                    return this;
+                }
+            }).then(function () {
+            res.redirect('/');
+        });
+    }
+});
+
+
 
 router.get('/log_in', function (req, res, next) {
     // Don't show login and register to logged in users

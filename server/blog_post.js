@@ -5,7 +5,6 @@ function Posts() {
     return knex('blog_post');
 }
 
-
 function addPost(title, body, user_id) {
     if (!title || !body) {
         return false
@@ -35,7 +34,6 @@ function getPosts() {
         .orderBy('id', 'desc');
 }
 
-
 function updatePost(post) {
     return Posts().where('id', post.id)
         .update({
@@ -47,7 +45,6 @@ function deletePost(post_id) {
     return Posts().where('id', post_id)
         .del();
 }
-
 
 module.exports = {
     add: addPost,

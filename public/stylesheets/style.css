@@ -46,6 +46,13 @@ body {
 
 .username {
   font-style: oblique;
+  color: #0d47a1;
+  font-weight: 100;
+}
+
+.cards .mdl-card {
+  margin-bottom: 15px;
+  min-height: 80px;
 }
 
 /*themes https://material.google.com/style/color.html#color-themes */
