@@ -190,37 +190,37 @@ router.get('/comment/:comment_id/edit_comment', function (req, res, next) {
     }
 });
 
-router.post('/post/:id/comment/:user_id/edit', function (req, res, next) {
+router.post('/comment/:comment_id/edit', function (req, res, next) {
     // Add the user to our data store
     if (req.isAuthenticated()) {
         // instead of add, do update
-        blogPost.updatePost({
-            id: req.params.id,
+        comments.updateComment({
+            id: req.params.comment_id,
             body: req.body.body
-        }).then(function () {
-            res.redirect('/post/' + req.params.id)
+        }).then(function (comment) {
+            res.redirect('/post/' + comment.blog_post_id);
         });
     }
 });
 
-router.post('/post/:id/comment/:id/delete', function (req, res, next) {
-    // Add the user to our data store
-    if (req.isAuthenticated()) {
-        // instead of add, do update
-        blogPost.getPost(req.params.id)
-            .then(function (post) {
-                if (post.user_id == req.user.id) {
-                    return blogPost.deletePost(post.id);
-                }
-                else {
-                    res.redirect('/error', {message: 'posts can only be deleted by author'});
-                    return this;
-                }
-            }).then(function () {
-            res.redirect('/');
-        });
-    }
-});
+// router.post('/comment/:id/delete', function (req, res, next) {
+//     // Add the user to our data store
+//     if (req.isAuthenticated()) {
+//         // instead of add, do update
+//         blogPost.getPost(req.params.id)
+//             .then(function (post) {
+//                 if (post.user_id == req.user.id) {
+//                     return blogPost.deletePost(post.id);
+//                 }
+//                 else {
+//                     res.redirect('/error', {message: 'posts can only be deleted by author'});
+//                     return this;
+//                 }
+//             }).then(function () {
+//             res.redirect('/');
+//         });
+//     }
+// });
 
 
 
