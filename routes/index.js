@@ -203,25 +203,43 @@ router.post('/comment/:comment_id/edit', function (req, res, next) {
     }
 });
 
-// router.post('/comment/:id/delete', function (req, res, next) {
-//     // Add the user to our data store
-//     if (req.isAuthenticated()) {
-//         // instead of add, do update
-//         blogPost.getPost(req.params.id)
-//             .then(function (post) {
-//                 if (post.user_id == req.user.id) {
-//                     return blogPost.deletePost(post.id);
-//                 }
-//                 else {
-//                     res.redirect('/error', {message: 'posts can only be deleted by author'});
-//                     return this;
-//                 }
-//             }).then(function () {
-//             res.redirect('/');
-//         });
-//     }
-// });
+router.post('/comment/:comment_id/delete', function (req, res, next) {
+    if (req.isAuthenticated()) {
+        // instead of add, do update
+        comments.getComment(req.params.comment_id)
+            .then(function (comment) {
+                if (comment.user_id == req.user.id) {
+                    return comments.deleteComment(req.params.comment_id);
+                }
+                else {
+                    res.redirect('/error', {message: 'comments can only be deleted by author'});
+                    return this;
+                }
+            }).then(function () {
+            res.redirect('/');
+        });
+    }
+});
 
+
+router.post('/post/:id/delete', function (req, res, next) {
+    // Add the user to our data store
+    if (req.isAuthenticated()) {
+        // instead of add, do update
+        blogPost.getPost(req.params.id)
+            .then(function (post) {
+                if (post.user_id == req.user.id) {
+                    return blogPost.deletePost(post.id);
+                }
+                else {
+                    res.redirect('/error', {message: 'posts can only be deleted by author'});
+                    return this;
+                }
+            }).then(function () {
+            res.redirect('/');
+        });
+    }
+});
 
 
 router.get('/log_in', function (req, res, next) {
